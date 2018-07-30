@@ -1,0 +1,6 @@
+# Yarn & NPM
+node_modules/
+yarn-error.log
+
+# IDE
+.vscode/

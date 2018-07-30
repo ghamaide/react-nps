@@ -1,0 +1,44 @@
+{
+  "extends": ["prettier", "prettier/react"],
+  "env": {
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "import",
+    "jsx-a11y",
+    "mysticatea",
+    "prefer-object-spread",
+    "prettier",
+    "react"
+  ],
+  "globals": {
+    "jest": true,
+    "expect": true
+  },
+  "rules": {
+    "mysticatea/no-useless-rest-spread": "error",
+    "prefer-object-spread/prefer-object-spread": 2,
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  }
+}
