@@ -5,14 +5,38 @@ import CloseIcon from '@material-ui/icons/Close';
 
 export const Style = styled.div`
   align-items: center;
+  animation-duration: 2s;
+  animation-name: ${props => (props.open ? 'NPS-slidein' : 'NPS-slideout')};
   background-color: #ffffff;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
+  border-top: 1px solid #dddddd;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 5px;
+  left: 0;
   padding: 10px;
+  position: absolute;
+  right: 0;
+
+  @keyframes NPS-slidein {
+    from {
+      bottom: -100%;
+    }
+
+    to {
+      bottom: 0;
+    }
+  }
+
+  @keyframes NPS-slideout {
+    from {
+      bottom: 0;
+    }
+
+    to {
+      bottom: -100%;
+    }
+  }
 `;
 
 export const Message = styled.div`
@@ -35,8 +59,8 @@ export const Close = styled(CloseIcon)`
   opacity: 0.5;
   padding: 5px;
   position: absolute;
-  right: 20px;
-  top: 15px;
+  right: 10px;
+  top: 5px;
 
   &:hover {
     cursor: pointer;

@@ -18,6 +18,7 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
     this.state = {
       hoveredScore: -1,
       open: true,
+      visible: true,
     };
   }
 
@@ -25,6 +26,9 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
     const { onClose } = this.props;
 
     this.setState({ open: false });
+    setTimeout(() => {
+      this.setState({ visible: false });
+    }, 2000);
 
     if (onClose && typeof onClose === 'function') {
       onClose();
@@ -49,18 +53,19 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
     if (onSubmit && typeof onSubmit === 'function') {
       onSubmit(buttonScore);
     }
+    this.onClose();
   };
 
   render() {
     const { style, message } = this.props;
-    const { hoveredScore, open } = this.state;
+    const { hoveredScore, open, visible } = this.state;
 
-    if (!open) {
+    if (!visible) {
       return null;
     }
 
     return (
-      <Style style={style}>
+      <Style open={open} style={style}>
         <Close onClick={this.onClose} />
         <Message>{message || DEFAULT_MESSAGE}</Message>
         <Content>
