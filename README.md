@@ -18,13 +18,17 @@ $ yarn add react-nps
 ## Usage
 
 ```js
-import
-
-tiny("So much space!");
-//=> "Somuchspace!"
-
-tiny(1337);
-//=> Uncaught TypeError: Tiny wants a string!
-//    at tiny (<anonymous>:2:41)
-//    at <anonymous>:1:1
+import NPS from "react-nps";
 ```
+
+Then in your render :
+
+```js
+<NPS onClose={this.onClose} onSubmit={this.onSubmit} />
+```
+
+## Props
+
+- `function onClose`: called when clicked on the close button or when a score is submitted
+- `function onSubmit`: function called when a score is submitted
+- `string message`: message displayed on the NPS component
