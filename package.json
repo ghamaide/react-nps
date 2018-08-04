@@ -1,10 +1,10 @@
 {
   "name": "react-nps",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A React component to gather NPS score",
   "main": "lib/index.js",
   "module": "lib/index.js",
-    "scripts": {
+  "scripts": {
     "dev": "webpack-dev-server --hot --progress --colors --config ./webpack.config.js",
     "build:lib": "babel src --out-dir lib",
     "build": "yarn build:lib && cross-env NODE_ENV=production webpack --config webpack.prod.config.js",
