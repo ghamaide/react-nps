@@ -7,11 +7,30 @@ import Button from '../ScoreButton';
 
 import { Close, Content, Message, Style } from './Wrapper.style';
 
+const DARK_BLUE = '#2196f3';
+const LIGHT_BLUE = '#c2eafc';
+
 type PropsType = {
+  animated?: boolean,
+  animationDuration?: number,
+  buttonColor?: string,
+  buttonHoveredColor?: string,
   message?: string,
+  onClose?: void => void,
+  onSubmit?: (?number) => void,
 };
 
 export default class Wrapper extends React.Component<PropsType, StateType> {
+  static defaultProps = {
+    animated: true,
+    animationDuration: 2,
+    buttonColor: '#c2eafc',
+    buttonHoveredColor: '#2196f3',
+    message: DEFAULT_MESSAGE,
+    onClose: () => {},
+    onSubmit: () => {},
+  };
+
   constructor(props) {
     super(props);
 
@@ -23,12 +42,17 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
   }
 
   onClose = () => {
-    const { onClose } = this.props;
+    const { animated, animationDuration, onClose } = this.props;
 
     this.setState({ open: false });
-    setTimeout(() => {
+
+    if (animated) {
+      setTimeout(() => {
+        this.setState({ visible: false });
+      }, animationDuration * 1000);
+    } else {
       this.setState({ visible: false });
-    }, 2000);
+    }
 
     if (onClose && typeof onClose === 'function') {
       onClose();
@@ -57,7 +81,14 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
   };
 
   render() {
-    const { style, message } = this.props;
+    const {
+      animated,
+      animationDuration,
+      buttonColor,
+      buttonHoveredColor,
+      message,
+    } = this.props;
+
     const { hoveredScore, open, visible } = this.state;
 
     if (!visible) {
@@ -65,14 +96,21 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
     }
 
     return (
-      <Style open={open} style={style}>
+      <Style
+        animationDuration={animationDuration}
+        className={animated ? 'animated' : ''}
+        open={open}
+      >
         <Close onClick={this.onClose} />
-        <Message>{message || DEFAULT_MESSAGE}</Message>
+        <Message>{message}</Message>
         <Content>
           {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(score => (
             <Button
+              buttonColor={buttonColor}
+              buttonHoveredColor={buttonHoveredColor}
               buttonScore={score}
               hoveredScore={hoveredScore}
+              key={score}
               onMouseEnter={this.onMouseEnter}
               onMouseLeave={this.onMouseLeave}
               onSubmit={this.onSubmit}

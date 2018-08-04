@@ -22,7 +22,14 @@ export default class App extends React.Component {
       <div style={{ height: '500px', margin: '50px' }}>
         <p>The submitted score is : {score}</p>
         <p>The panel is : {isNpsOpen ? 'open' : 'closed'}</p>
-        <NPS onClose={this.onClose} onSubmit={this.onSubmit} />
+        <NPS
+          animated={false}
+          animationDuration={3}
+          buttonColor="#c2eafc"
+          buttonHoveredColor="#2196f3"
+          onClose={this.onClose}
+          onSubmit={this.onSubmit}
+        />
       </div>
     );
   }

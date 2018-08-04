@@ -5,8 +5,6 @@ import CloseIcon from '@material-ui/icons/Close';
 
 export const Style = styled.div`
   align-items: center;
-  animation-duration: 2s;
-  animation-name: ${props => (props.open ? 'NPS-slidein' : 'NPS-slideout')};
   background-color: #ffffff;
   border-top: 1px solid #dddddd;
   bottom: 0;
@@ -15,8 +13,13 @@ export const Style = styled.div`
   justify-content: center;
   left: 0;
   padding: 10px;
-  position: absolute;
+  position: fixed;
   right: 0;
+
+  &.animated {
+    animation-duration: ${props => props.animationDuration}s;
+    animation-name: ${props => (props.open ? 'NPS-slidein' : 'NPS-slideout')};
+  }
 
   @keyframes NPS-slidein {
     from {
