@@ -18,7 +18,8 @@ export const Style = styled.div`
 
   &.animated {
     animation-duration: ${props => props.animationDuration}s;
-    animation-name: ${props => (props.open ? 'NPS-slidein' : 'NPS-slideout')};
+    animation-name: ${props =>
+      props.visible ? 'NPS-slidein' : 'NPS-slideout'};
   }
 
   @keyframes NPS-slidein {

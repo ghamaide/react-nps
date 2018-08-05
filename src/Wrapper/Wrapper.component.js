@@ -7,15 +7,13 @@ import Button from '../ScoreButton';
 
 import { Close, Content, Message, Style } from './Wrapper.style';
 
-const DARK_BLUE = '#2196f3';
-const LIGHT_BLUE = '#c2eafc';
-
 type PropsType = {
   animated?: boolean,
   animationDuration?: number,
   buttonColor?: string,
   buttonHoveredColor?: string,
   message?: string,
+  open?: boolean,
   onClose?: void => void,
   onSubmit?: (?number) => void,
 };
@@ -24,9 +22,8 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
   static defaultProps = {
     animated: true,
     animationDuration: 2,
-    buttonColor: '#c2eafc',
-    buttonHoveredColor: '#2196f3',
     message: DEFAULT_MESSAGE,
+    open: true,
     onClose: () => {},
     onSubmit: () => {},
   };
@@ -36,22 +33,32 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
 
     this.state = {
       hoveredScore: -1,
-      open: true,
+      open: props.open,
       visible: true,
     };
   }
 
-  onClose = () => {
+  componentDidUpdate(prevProps) {
+    if (prevProps.open !== this.props.open && this.props.open) {
+      this.open();
+    }
+
+    if (prevProps.open !== this.props.open && !this.props.open) {
+      this.close();
+    }
+  }
+
+  close = () => {
     const { animated, animationDuration, onClose } = this.props;
 
-    this.setState({ open: false });
+    this.setState({ visible: false });
 
     if (animated) {
       setTimeout(() => {
-        this.setState({ visible: false });
+        this.setState({ open: false });
       }, animationDuration * 1000);
     } else {
-      this.setState({ visible: false });
+      this.setState({ open: false });
     }
 
     if (onClose && typeof onClose === 'function') {
@@ -77,7 +84,16 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
     if (onSubmit && typeof onSubmit === 'function') {
       onSubmit(buttonScore);
     }
-    this.onClose();
+    this.close();
+  };
+
+  open = () => {
+    const { onOpen } = this.props;
+    this.setState({ open: true, visible: true });
+
+    if (onOpen && typeof onOpen === 'function') {
+      onOpen();
+    }
   };
 
   render() {
@@ -91,7 +107,7 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
 
     const { hoveredScore, open, visible } = this.state;
 
-    if (!visible) {
+    if (!open) {
       return null;
     }
 
@@ -99,9 +115,9 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
       <Style
         animationDuration={animationDuration}
         className={animated ? 'animated' : ''}
-        open={open}
+        visible={visible}
       >
-        <Close onClick={this.onClose} />
+        <Close onClick={this.close} />
         <Message>{message}</Message>
         <Content>
           {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(score => (

@@ -2,13 +2,12 @@
 
 import styled from 'styled-components';
 
-const DARK_BLUE = '#2196f3';
-const LIGHT_BLUE = '#c2eafc';
-
 export const Button = styled.button`
   align-items: center;
-  background-color: ${props => (props.active ? DARK_BLUE : LIGHT_BLUE)};
-  border: 5px solid ${props => (props.highlighted ? DARK_BLUE : '#ffffff')};
+  background-color: ${props =>
+    props.active ? props.buttonHoveredColor : props.buttonColor};
+  border: 5px solid
+    ${props => (props.highlighted ? props.buttonHoveredColor : '#ffffff')};
   border-radius: 50%;
   color: ${props => (props.active ? 'white' : 'black')};
   display: flex;
@@ -20,7 +19,7 @@ export const Button = styled.button`
   width: 40px;
 
   &:hover {
-    background-color: ${DARK_BLUE};
+    background-color: ${props => props.buttonHoveredColor};
     cursor: pointer;
   }
 `;
