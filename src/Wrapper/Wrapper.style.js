@@ -1,30 +1,45 @@
-// @flow
-
 import styled from 'styled-components';
 import CloseIcon from '@material-ui/icons/Close';
+
+const getHeight = props =>
+  props.innerStyle.innerHeight +
+  2 * props.innerStyle.padding +
+  props.innerStyle.border;
 
 export const Style = styled.div`
   align-items: center;
   background-color: #ffffff;
-  border-top: 1px solid #dddddd;
+  border-top: ${props => props.innerStyle.border}px solid #dddddd;
   bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   left: 0;
-  padding: 10px;
+  padding: ${props => props.innerStyle.padding}px;
   position: fixed;
   right: 0;
 
-  &.animated {
-    animation-duration: ${props => props.animationDuration}s;
-    animation-name: ${props =>
-      props.visible ? 'NPS-slidein' : 'NPS-slideout'};
+  &.container-enter-active {
+    animation-duration: ${props => props.duration}s;
+    animation-name: NPS-slidein;
+  }
+
+  &.container-enter-done {
+    bottom: 0;
+  }
+
+  &.container-exit-active {
+    animation-duration: ${props => props.duration}s;
+    animation-name: NPS-slideout;
+  }
+
+  &.container-exit-done {
+    bottom: -${props => getHeight(props)}px;
   }
 
   @keyframes NPS-slidein {
     from {
-      bottom: -100%;
+      bottom: -${props => getHeight(props)}px;
     }
 
     to {
@@ -38,7 +53,7 @@ export const Style = styled.div`
     }
 
     to {
-      bottom: -100%;
+      bottom: -${props => getHeight(props)}px;
     }
   }
 `;

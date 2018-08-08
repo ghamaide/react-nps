@@ -1,15 +1,21 @@
-// @flow
-
 import styled from 'styled-components';
 
 export const Button = styled.button`
   align-items: center;
   background-color: ${props =>
-    props.active ? props.buttonHoveredColor : props.buttonColor};
+    props.active
+      ? props.innerStyle.button.backgroundActiveColor
+      : props.innerStyle.button.backgroundColor};
   border: 5px solid
-    ${props => (props.highlighted ? props.buttonHoveredColor : '#ffffff')};
+    ${props =>
+      props.highlighted
+        ? props.innerStyle.button.backgroundActiveColor
+        : '#ffffff'};
   border-radius: 50%;
-  color: ${props => (props.active ? 'white' : 'black')};
+  color: ${props =>
+    props.active
+      ? props.innerStyle.button.textActiveColor
+      : props.innerStyle.button.textColor};
   display: flex;
   height: 40px;
   justify-content: center;
@@ -19,7 +25,6 @@ export const Button = styled.button`
   width: 40px;
 
   &:hover {
-    background-color: ${props => props.buttonHoveredColor};
     cursor: pointer;
   }
 `;

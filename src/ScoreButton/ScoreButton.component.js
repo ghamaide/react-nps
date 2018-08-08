@@ -1,45 +1,33 @@
-// @flow
-
 import React from 'react';
 
 import { Button } from './ScoreButton.style';
 
-const DARK_BLUE = '#2196f3';
-const LIGHT_BLUE = '#c2eafc';
+import { DEFAULT_STYLE } from '../constants';
 
-type PropsType = {
-  buttonColor?: string,
-  buttonHoveredColor?: string,
-  buttonScore: number,
-  hoveredScore: number,
-  onMouseEnter: number => void,
-  onMouseLeave: void => void,
-  onSubmit: number => void,
-};
-
-export default class ScoreButton extends React.Component<PropsType> {
-  static defaultProps = {
-    buttonColor: LIGHT_BLUE,
-    buttonHoveredColor: DARK_BLUE,
-  };
-
+export default class ScoreButton extends React.Component {
   render() {
     const {
       buttonScore,
-      buttonColor,
-      buttonHoveredColor,
+      buttonStyle,
       hoveredScore,
       onMouseEnter,
       onMouseLeave,
       onSubmit,
     } = this.props;
 
+    const style = {
+      ...DEFAULT_STYLE,
+      button: {
+        ...DEFAULT_STYLE.button,
+        ...buttonStyle,
+      },
+    };
+
     return (
       <Button
         active={hoveredScore >= buttonScore}
-        buttonColor={buttonColor}
-        buttonHoveredColor={buttonHoveredColor}
         highlighted={hoveredScore === buttonScore}
+        innerStyle={style}
         onClick={onSubmit(buttonScore)}
         onMouseEnter={onMouseEnter(buttonScore)}
         onMouseLeave={onMouseLeave}

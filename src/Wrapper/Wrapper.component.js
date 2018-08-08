@@ -1,22 +1,10 @@
-// @flow
-
 import React from 'react';
+import CSSTransition from 'react-transition-group/CSSTransition';
 
 import { DEFAULT_MESSAGE } from '../constants';
 import Button from '../ScoreButton';
 
 import { Close, Content, Message, Style } from './Wrapper.style';
-
-type PropsType = {
-  animated?: boolean,
-  animationDuration?: number,
-  buttonColor?: string,
-  buttonHoveredColor?: string,
-  message?: string,
-  open?: boolean,
-  onClose?: void => void,
-  onSubmit?: (?number) => void,
-};
 
 export default class Wrapper extends React.Component<PropsType, StateType> {
   static defaultProps = {
@@ -24,8 +12,6 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
     animationDuration: 2,
     message: DEFAULT_MESSAGE,
     open: true,
-    onClose: () => {},
-    onSubmit: () => {},
   };
 
   constructor(props) {
@@ -33,36 +19,14 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
 
     this.state = {
       hoveredScore: -1,
-      open: props.open,
-      visible: true,
     };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.open !== this.props.open && this.props.open) {
-      this.open();
-    }
-
-    if (prevProps.open !== this.props.open && !this.props.open) {
-      this.close();
-    }
-  }
-
-  close = () => {
-    const { animated, animationDuration, onClose } = this.props;
-
-    this.setState({ visible: false });
-
-    if (animated) {
-      setTimeout(() => {
-        this.setState({ open: false });
-      }, animationDuration * 1000);
-    } else {
-      this.setState({ open: false });
-    }
+  onClose = event => {
+    const { onClose } = this.props;
 
     if (onClose && typeof onClose === 'function') {
-      onClose();
+      onClose(event);
     }
   };
 
@@ -84,56 +48,50 @@ export default class Wrapper extends React.Component<PropsType, StateType> {
     if (onSubmit && typeof onSubmit === 'function') {
       onSubmit(buttonScore);
     }
-    this.close();
-  };
-
-  open = () => {
-    const { onOpen } = this.props;
-    this.setState({ open: true, visible: true });
-
-    if (onOpen && typeof onOpen === 'function') {
-      onOpen();
-    }
   };
 
   render() {
-    const {
-      animated,
-      animationDuration,
-      buttonColor,
-      buttonHoveredColor,
-      message,
-    } = this.props;
+    const { animated, animationDuration, message, open, style } = this.props;
 
-    const { hoveredScore, open, visible } = this.state;
+    const { hoveredScore } = this.state;
 
-    if (!open) {
-      return null;
-    }
+    const innerStyle = {
+      border: 1,
+      innerHeight: 100,
+      padding: 10,
+    };
 
     return (
-      <Style
-        animationDuration={animationDuration}
-        className={animated ? 'animated' : ''}
-        visible={visible}
+      <CSSTransition
+        appear
+        classNames="container"
+        in={open}
+        mountOnEnter
+        timeout={animated ? animationDuration * 1000 : 0}
+        unmountOnExit
       >
-        <Close onClick={this.close} />
-        <Message>{message}</Message>
-        <Content>
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(score => (
-            <Button
-              buttonColor={buttonColor}
-              buttonHoveredColor={buttonHoveredColor}
-              buttonScore={score}
-              hoveredScore={hoveredScore}
-              key={score}
-              onMouseEnter={this.onMouseEnter}
-              onMouseLeave={this.onMouseLeave}
-              onSubmit={this.onSubmit}
-            />
-          ))}
-        </Content>
-      </Style>
+        <Style
+          className="container"
+          duration={animationDuration}
+          innerStyle={innerStyle}
+        >
+          <Close onClick={this.onClose} />
+          <Message>{message}</Message>
+          <Content>
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(score => (
+              <Button
+                buttonStyle={style}
+                buttonScore={score}
+                hoveredScore={hoveredScore}
+                key={score}
+                onMouseEnter={this.onMouseEnter}
+                onMouseLeave={this.onMouseLeave}
+                onSubmit={this.onSubmit}
+              />
+            ))}
+          </Content>
+        </Style>
+      </CSSTransition>
     );
   }
 }

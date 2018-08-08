@@ -27,6 +27,13 @@ export default class App extends React.Component {
   render() {
     const { isNpsOpen, date, score } = this.state;
 
+    const buttonStyle = {
+      backgroundActiveColor: '#D32F2F',
+      backgroundColor: '#E57373',
+      textActiveColor: '#FFFFFF',
+      textColor: '#000000',
+    };
+
     return (
       <div style={{ height: '500px', margin: '50px' }}>
         <p>The submitted score is : {score}</p>
@@ -37,14 +44,13 @@ export default class App extends React.Component {
           </p>
         )}
         <button onClick={this.onOpen}>Open panel</button>
+        <button onClick={this.onClose}>Close panel</button>
         <NPS
           animationDuration={1}
-          buttonColor="#EF9A9A"
-          buttonHoveredColor="#C62828"
           open={isNpsOpen}
           onClose={this.onClose}
-          onOpen={this.displayMessageOnOpen}
           onSubmit={this.onSubmit}
+          style={buttonStyle}
         />
       </div>
     );

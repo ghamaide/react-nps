@@ -1,7 +1,6 @@
 {
   "presets": [["env"], "react"],
   "plugins": [
-    "babel-plugin-styled-components",
     "transform-object-rest-spread",
     "transform-class-properties",
     "transform-export-extensions"

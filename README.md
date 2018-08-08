@@ -24,18 +24,23 @@ import NPS from "react-nps";
 Then in your render :
 
 ```js
-<NPS onClose={this.onClose} onSubmit={this.onSubmit} />
+onClose = (event) => {
+  event.preventDefault();
+
+  this.setState({ open: false });
+}
+
+...
+
+<NPS onClose={this.onClose} onSubmit={this.onSubmit} open={this.state.open} />
 ```
 
 ## Available props
 
 - `animated: boolean default true`: whether the panel is animated or not
 - `animationDuration: number default 2`: duration of the animation in second - works only if animated is `true`
-- `buttonColor: string`: the button color
-- `buttonHoveredColor: string`: the button color when hovered
 - `message: string`: message displayed on the NPS component
 - `onClose: function`: called when clicked on the close button or when a score is submitted
-- `onOpen: function`: called when clicked on the close button or when a score is submitted
-- `onSubmit: function`: function called when a score is submitted
 - `onSubmit: function`: function called when a score is submitted
 - `open: boolean default true`: whether the panel is open or not
+- `style: object`: the button style, possible keys are: `backgroundColor`, `backgroundActiveColor`, `textColor`, and `textActiveColor`
