@@ -3,6 +3,8 @@
 [![npm (scoped)](https://img.shields.io/npm/v/react-nps.svg)](https://www.npmjs.com/package/react-nps)
 [![npm (scoped)](https://img.shields.io/npm/l/react-nps.svg)](https://github.com/ghamaide/react-nps/blob/master/LICENSE)
 
+![Example](./example.gif)
+
 ## Install
 
 ```
