@@ -37,7 +37,7 @@ onClose = (event) => {
 <NPS onClose={this.onClose} onSubmit={this.onSubmit} open={this.state.open} />
 ```
 
-## Available props
+### Available props
 
 - `animated: boolean default true`: whether the panel is animated or not
 - `animationDuration: number default 2`: duration of the animation in second - works only if animated is `true`
@@ -46,3 +46,7 @@ onClose = (event) => {
 - `onSubmit: function`: function called when a score is submitted
 - `open: boolean default true`: whether the panel is open or not
 - `style: object`: the button style, possible keys are: `backgroundColor`, `backgroundActiveColor`, `textColor`, and `textActiveColor`
+
+## Thanks
+
+Initially inspired by [react-nps-input](https://github.com/SamyPesse/react-nps-input)
